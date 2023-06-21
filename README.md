@@ -64,8 +64,7 @@ While implementing your solution **please take care of the following requirement
 - Your project must be buildable and runnable;
 - Your project must have a README file with build/run/test instructions (use DB that can be run locally, e.g. in-memory, via container);
 - Any data required by the application to run (e.g. reference tables, dummy data) must be preloaded in the database.
-- JUnit tests are optional but advisable (if you have time);
-- Advice: Show us how you work through your commit history.
+- Unit tests are optional but advisable (if you have time);
 
 ---
 
