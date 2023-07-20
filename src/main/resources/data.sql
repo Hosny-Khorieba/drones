@@ -1,0 +1,3 @@
+insert into drone (id, serial_num, model, weight_limit, battery_capacity, state) values (1, 'DRONE_1', 'Lightweight', 60, 50, 'IDLE');
+insert into drone (id, serial_num, model, weight_limit, battery_capacity, state) values (2, 'DRONE_2', 'Lightweight', 75, 20, 'IDLE');
+insert into drone (id, serial_num, model, weight_limit, battery_capacity, state) values (3, 'DRONE_3', 'Lightweight', 100, 25, 'IDLE');
