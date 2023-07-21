@@ -24,9 +24,16 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
         Drone drone = droneRepository.findById(droneId).get();
         medicationIds.forEach(medicationId -> {
             //TODO make sure to throw exception if medication not exist
+            //TODO check for max drone weight
             Medication medication = medicationRepository.getById(medicationId);
             medication.setDrone(drone);
             medicationRepository.saveAndFlush(medication);
         });
+    }
+
+    @Override
+    public List<Medication> getDroneMedications(Long droneId) {
+        Drone drone = droneRepository.getById(droneId);
+        return medicationRepository.findByDrone(drone);
     }
 }

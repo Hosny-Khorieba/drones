@@ -3,9 +3,7 @@ package com.musala.drones.controllers;
 import com.musala.drones.services.DroneMedicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,5 +17,10 @@ public class DroneMedicationController {
     public ResponseEntity<?> loadDroneWithMedications(@RequestParam Long droneId, @RequestParam List<Long> medicationIds){
         droneMedicationService.loadDroneWithMedications(droneId, medicationIds);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "medications/{droneId}")
+    public ResponseEntity<?> getDroneMedications(@PathVariable Long droneId){
+        return ResponseEntity.ok(droneMedicationService.getDroneMedications(droneId));
     }
 }
