@@ -33,7 +33,7 @@ public class Drone implements Serializable {
     private Integer batteryCapacity;
     @Enumerated(EnumType.STRING)
     private DroneStateEnum state;
-    @OneToMany(mappedBy = "drone")
-    @JsonIgnore
-    private List<Medication> medications;
+//    @OneToMany(mappedBy = "drone")
+//    @JsonIgnore
+//    private List<Medication> medications;
 }

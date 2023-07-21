@@ -1,22 +1,20 @@
-package com.musala.drones.models;
+package com.musala.drones.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
-@Entity
-@Data
-public class Medication implements Serializable {
-    private static final long serialVersionUID = 2265961534781776440L;
+@Getter
+@Setter
+@NoArgsConstructor
+public class RegisterMedicationDto implements Serializable {
+    private static final long serialVersionUID = 8530670522503107655L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Pattern(regexp = "^[a-zA-Z0-9_-]*$", message = "Name must consist of letters and numbers with and _ and - only")
     @NotBlank(message = "Medication Name cannot be blank")
     private String name;
@@ -24,11 +22,6 @@ public class Medication implements Serializable {
     private Integer weight;
     @Pattern(regexp = "^[A-Z0-9_]*$", message = "Code must consist of uppercase letters and numbers with and _ only")
     private String code;
+    @Pattern(regexp = "^[a-zA-Z0-9._ -]+$", message = "Image name must consist of letters, numbers, ., _, - only")
     private String imageName;
-    @JsonIgnore
-    private String imagePath;
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "drone_id")
-    private Drone drone;
 }
