@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "954500c9-413f-48a7-a9f4-8eeb3224c763",
+		"name": "Musala Drones Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8761996"
+	},
+	"item": [
+		{
+			"name": "/drone/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"serialNum\": \"DRONE_5\",\r\n    \"model\": \"Lightweight\",\r\n    \"weightLimit\": 400,\r\n    \"batteryCapacity\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/drone/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"drone",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "drone/available-for-loading",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/drone/available-for-loading",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"drone",
+						"available-for-loading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/drone/{droneId}/battery-percentage",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/drone/2/battery-percentage",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"drone",
+						"2",
+						"battery-percentage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/medication/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/20106/Desktop/FaQiMKOVsAA7L_j.jpeg"
+						},
+						{
+							"key": "medicationDto",
+							"value": "{\n    \"name\": \"Med2\",\n    \"weight\": 20,\n    \"code\": \"MED_2\"\n}",
+							"contentType": "application/json",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/medication/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medication",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/drone/load?droneId={droneId}&medicationIds={med1, med2}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/drone/load?droneId=2&medicationIds=1,2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"drone",
+						"load"
+					],
+					"query": [
+						{
+							"key": "droneId",
+							"value": "2"
+						},
+						{
+							"key": "medicationIds",
+							"value": "1,2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "medications/{droneId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/medications/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
