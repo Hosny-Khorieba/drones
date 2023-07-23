@@ -1,6 +1,7 @@
 package com.musala.drones.services.impl;
 
 import com.musala.drones.enums.DroneStateEnum;
+import com.musala.drones.exceptions.DroneBatteryLow;
 import com.musala.drones.exceptions.DroneNotExist;
 import com.musala.drones.exceptions.DroneWeightLimitExceeded;
 import com.musala.drones.exceptions.MedicationNotExist;
@@ -26,6 +27,9 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
     @Override
     public void loadDroneWithMedications(Long droneId, List<Long> medicationIds) {
         Drone drone = droneRepository.findById(droneId).orElseThrow(() -> new DroneNotExist("Drone ID provided not exist"));
+
+        if(drone.getBatteryCapacity() < 25)
+            throw new DroneBatteryLow("Can't load the drone while it's battery capacity lower than 25%");
 
         AtomicInteger currentWeight = new AtomicInteger();
         medicationIds.forEach(medicationId -> {

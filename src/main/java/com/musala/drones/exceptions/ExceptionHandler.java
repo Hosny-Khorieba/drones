@@ -18,6 +18,11 @@ public class ExceptionHandler {
         return new ResponseEntity<>(new ErrorDto(HttpStatus.NOT_FOUND.value(), new Date(), exception.getMessage()), HttpStatus.NOT_FOUND);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(DroneBatteryLow.class)
+    public ResponseEntity<?> handleDroneBatteryLow(RuntimeException exception){
+        return new ResponseEntity<>(new ErrorDto(HttpStatus.BAD_REQUEST.value(), new Date(), exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
     @org.springframework.web.bind.annotation.ExceptionHandler(DroneWeightLimitExceeded.class)
     public ResponseEntity<?> handleDroneWeightLimitExceeded(RuntimeException exception){
         return new ResponseEntity<>(new ErrorDto(HttpStatus.BAD_REQUEST.value(), new Date(), exception.getMessage()), HttpStatus.BAD_REQUEST);

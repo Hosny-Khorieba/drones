@@ -1,6 +1,7 @@
 package com.musala.drones.services.impl;
 
 import com.musala.drones.enums.DroneStateEnum;
+import com.musala.drones.exceptions.DroneBatteryLow;
 import com.musala.drones.exceptions.DroneNotExist;
 import com.musala.drones.exceptions.DroneWeightLimitExceeded;
 import com.musala.drones.exceptions.MedicationNotExist;
@@ -117,6 +118,22 @@ public class DroneMedicationServiceImplTest {
         }
 
         assertThrows(DroneWeightLimitExceeded.class, () -> droneMedicationService.loadDroneWithMedications(droneId, medicationIds));
+    }
+
+    @Test
+    public void testLoadDroneWithMedications_DroneBatteryLow() {
+        Long droneId = 1L;
+        List<Long> medicationIds = Arrays.asList(1L, 2L, 3L);
+
+        Drone drone = new Drone();
+        drone.setId(droneId);
+        drone.setState(DroneStateEnum.IDLE);
+        drone.setWeightLimit(1000);
+        drone.setBatteryCapacity(20);
+
+        when(droneRepositoryMock.findById(droneId)).thenReturn(Optional.of(drone));
+
+        assertThrows(DroneBatteryLow.class, () -> droneMedicationService.loadDroneWithMedications(droneId, medicationIds));
     }
 
     @Test
