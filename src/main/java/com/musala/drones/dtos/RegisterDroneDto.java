@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Getter
@@ -21,7 +18,7 @@ public class RegisterDroneDto implements Serializable {
     @Size(max = 100, message = "Serial Number must be less than or equal to 100 characters")
     @NotBlank(message = "Serial Number cannot be empty")
     private String serialNum;
-    @NotBlank(message = "Drone must have a model")
+    @NotNull(message = "Drone must have a model")
     private DroneModelEnum model;
     @Max(value = 500, message = "A drone max weight limit is 500 grams")
     private Integer weightLimit;
