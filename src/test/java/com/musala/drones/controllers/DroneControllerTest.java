@@ -16,11 +16,17 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,5 +98,38 @@ class DroneControllerTest {
                         .content(content)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void testAvailableForLoading_success() throws Exception {
+        List<Drone> returnedList = new ArrayList<>();
+        for(int i = 0; i < 3; i++){
+            Drone returnedDrone = new Drone();
+            returnedDrone.setId((long) i + 1);
+            returnedDrone.setSerialNum("DRONE_" + i);
+            returnedDrone.setModel(DroneModelEnum.Lightweight);
+            returnedDrone.setWeightLimit(500);
+            returnedDrone.setBatteryCapacity(50);
+            returnedDrone.setState(DroneStateEnum.IDLE);
+            returnedList.add(returnedDrone);
+        }
+        when(droneService.getAvailableForLoading()).thenReturn(returnedList);
+
+        mockMvc.perform(get("/drone/available-for-loading")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(3)));
+    }
+
+    @Test
+    public void testBatteryPercentage_success() throws Exception {
+        when(droneService.getBatteryPercentage(any(Long.class))).thenReturn(50);
+
+        mockMvc.perform(get("/drone/5/battery-percentage")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(mvcResult -> {assertEquals(mvcResult.getResponse().getContentAsString(), "50");});
     }
 }

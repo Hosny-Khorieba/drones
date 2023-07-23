@@ -27,7 +27,6 @@ public class DroneController {
 
     @GetMapping(value = "/{droneId}/battery-percentage")
     public ResponseEntity<?> getBatteryPercentage(@PathVariable Long droneId){
-        //TODO make sure drone exists
         return ResponseEntity.ok(droneService.getBatteryPercentage(droneId));
     }
 }

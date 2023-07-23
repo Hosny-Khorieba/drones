@@ -1,5 +1,9 @@
 package com.musala.drones.services.impl;
 
+import com.musala.drones.enums.DroneStateEnum;
+import com.musala.drones.exceptions.DroneNotExist;
+import com.musala.drones.exceptions.DroneWeightLimitExceeded;
+import com.musala.drones.exceptions.MedicationNotExist;
 import com.musala.drones.models.Drone;
 import com.musala.drones.models.Medication;
 import com.musala.drones.repositories.DroneRepository;
@@ -9,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class DroneMedicationServiceImpl implements DroneMedicationService {
@@ -20,12 +25,21 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
 
     @Override
     public void loadDroneWithMedications(Long droneId, List<Long> medicationIds) {
-        //TODO make sure to throw exception if drone not exist
-        Drone drone = droneRepository.findById(droneId).get();
+        Drone drone = droneRepository.findById(droneId).orElseThrow(() -> new DroneNotExist("Drone ID provided not exist"));
+
+        AtomicInteger currentWeight = new AtomicInteger();
         medicationIds.forEach(medicationId -> {
-            //TODO make sure to throw exception if medication not exist
-            //TODO check for max drone weight
-            Medication medication = medicationRepository.getById(medicationId);
+            Medication medication = medicationRepository.findById(medicationId).orElseThrow(() -> new MedicationNotExist("Medication ID provided not exist"));
+            currentWeight.addAndGet(medication.getWeight());
+            if(currentWeight.get() < drone.getWeightLimit()){
+                drone.setState(DroneStateEnum.LOADING);
+            }else if(currentWeight.get() == drone.getWeightLimit()){
+                drone.setState(DroneStateEnum.LOADED);
+            }else{
+                droneRepository.save(drone);
+                throw new DroneWeightLimitExceeded("Drone max weight is " + drone.getWeightLimit());
+            }
+            droneRepository.save(drone);
             medication.setDrone(drone);
             medicationRepository.saveAndFlush(medication);
         });

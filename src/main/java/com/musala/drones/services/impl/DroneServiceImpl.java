@@ -2,6 +2,7 @@ package com.musala.drones.services.impl;
 
 import com.musala.drones.dtos.RegisterDroneDto;
 import com.musala.drones.enums.DroneStateEnum;
+import com.musala.drones.exceptions.DroneNotExist;
 import com.musala.drones.mappers.DroneMapper;
 import com.musala.drones.models.Drone;
 import com.musala.drones.repositories.DroneRepository;
@@ -38,7 +39,11 @@ public class DroneServiceImpl implements DroneService {
 
     @Override
     public Integer getBatteryPercentage(Long droneId) {
-        return droneRepository.getBatteryPercentageForDrone(droneId);
+        Integer batteryPercentage = droneRepository.getBatteryPercentageForDrone(droneId);
+        if(batteryPercentage != null){
+            return batteryPercentage;
+        }
+        throw new DroneNotExist("Provided drone not exist");
     }
 
     @Scheduled(fixedRate = 1000)
