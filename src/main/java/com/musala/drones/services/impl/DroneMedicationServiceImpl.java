@@ -41,7 +41,7 @@ public class DroneMedicationServiceImpl implements DroneMedicationService {
                 drone.setState(DroneStateEnum.LOADED);
             }else{
                 droneRepository.save(drone);
-                throw new DroneWeightLimitExceeded("Drone max weight is " + drone.getWeightLimit());
+                throw new DroneWeightLimitExceeded("Drone max weight is " + drone.getWeightLimit() + " grams");
             }
             droneRepository.save(drone);
             medication.setDrone(drone);

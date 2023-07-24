@@ -1,7 +1,6 @@
 package com.musala.drones.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.musala.drones.dtos.RegisterMedicationDto;
 import com.musala.drones.models.Medication;
 import com.musala.drones.services.MedicationService;
@@ -55,19 +54,16 @@ class MedicationControllerTest {
         testDto.setWeight(20);
         testDto.setImageName("Med1Image");
 
-        byte[] imageContent = "Your image content".getBytes();
+        byte[] imageContent = new byte[1024];
         String imageName = "medication_image.jpg";
-        MultipartFile imageFile = new MockMultipartFile("image", imageName, MediaType.IMAGE_JPEG_VALUE, imageContent);
-
+        MockMultipartFile imageFile = new MockMultipartFile("image", imageName, MediaType.IMAGE_JPEG_VALUE, imageContent);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writer();
-        String content = objectWriter.writeValueAsString(testDto);
+        MockMultipartFile medicationDtoFile = new MockMultipartFile("medicationDto", null, MediaType.APPLICATION_JSON_VALUE, objectMapper.writeValueAsBytes(testDto));
+
         mockMvc.perform(multipart("/medication/register")
-//                        .file(imageFile)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
-                        .param("medicationDto", content)
-                        .param("image", imageFile.toString()))
+                        .file(imageFile)
+                        .file(medicationDtoFile))
                 .andExpect(status().isOk());
     }
 
