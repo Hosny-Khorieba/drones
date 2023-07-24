@@ -63,14 +63,7 @@
 				"header": [],
 				"body": {
 					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "",
-							"value": "",
-							"type": "text",
-							"disabled": true
-						}
-					]
+					"formdata": []
 				},
 				"url": {
 					"raw": "localhost:8080/drone/2/battery-percentage",
@@ -98,7 +91,7 @@
 						{
 							"key": "image",
 							"type": "file",
-							"src": "/C:/Users/20106/Desktop/FaQiMKOVsAA7L_j.jpeg"
+							"src": "/C:/Users/20106/Desktop/medication.jpeg"
 						},
 						{
 							"key": "medicationDto",
@@ -128,7 +121,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/drone/load?droneId=2&medicationIds=1,2",
+					"raw": "localhost:8080/drone/load?droneId=1&medicationIds=1,2",
 					"host": [
 						"localhost"
 					],
@@ -140,7 +133,7 @@
 					"query": [
 						{
 							"key": "droneId",
-							"value": "2"
+							"value": "1"
 						},
 						{
 							"key": "medicationIds",

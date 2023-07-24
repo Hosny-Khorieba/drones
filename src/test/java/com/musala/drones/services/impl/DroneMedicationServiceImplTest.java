@@ -52,6 +52,7 @@ public class DroneMedicationServiceImplTest {
         drone.setId(droneId);
         drone.setState(DroneStateEnum.IDLE);
         drone.setWeightLimit(1000);
+        drone.setBatteryCapacity(50);
 
         List<Medication> medications = new ArrayList<>();
         for (Long medicationId : medicationIds) {
@@ -87,6 +88,7 @@ public class DroneMedicationServiceImplTest {
         drone.setId(droneId);
         drone.setState(DroneStateEnum.IDLE);
         drone.setWeightLimit(1000);
+        drone.setBatteryCapacity(50);
 
         when(droneRepositoryMock.findById(droneId)).thenReturn(Optional.of(drone));
         when(medicationRepositoryMock.findById(anyLong())).thenReturn(Optional.empty());
@@ -103,6 +105,7 @@ public class DroneMedicationServiceImplTest {
         drone.setId(droneId);
         drone.setState(DroneStateEnum.IDLE);
         drone.setWeightLimit(400);
+        drone.setBatteryCapacity(50);
 
         List<Medication> medications = new ArrayList<>();
         for (Long medicationId : medicationIds) {
