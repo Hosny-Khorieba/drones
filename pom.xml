@@ -108,6 +108,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>drones-app</finalName>
 	</build>
 
 </project>
